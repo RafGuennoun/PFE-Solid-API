@@ -8,7 +8,7 @@ const setLocation = require('./routes/setLocation.js');
 
 app.use(bodyParser.json());
 app.use('/getLocation', getLocation);
-app.use('/getLocation', setLocation);
+app.use('/setLocation', setLocation);
 
 app.get('/', (req,res) => {
     console.log("running");

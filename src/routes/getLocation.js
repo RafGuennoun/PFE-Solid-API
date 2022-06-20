@@ -2,6 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 const auth = require('../modules/auth.js');
+const solidFiles = require('../modules/solidFiles.js');
 
 router.get('/', async (req, res) => {
     console.log("Route : /getLocation");
@@ -10,17 +11,43 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
 
-    let webID = await auth.loginToPOD(req.body);
+    // Part 1 : Login
+
+    const loginBody = {
+        "idp" : req.body.idp,
+        "username" : req.body.username,
+        "password" : req.body.password
+    }
+
+    let card = await auth.loginToPOD(loginBody);
     
-    console.log(`clg WebID from route = ${webID}`);
-    let result = {
+    console.log(`clg WebID from route = ${card}`);
+    const webID = card.replace('/profile/card#me','');
+
+    const loginResult = {
         "login" : true,
         "idp" : req.body.idp, 
         "username" : req.body.username, 
-        "webID" : webID.replace('/profile/card#me','')    
+        "webID" : webID
     };
 
-    res.send(result);
+    console.log(`Login result : \n ${loginResult}`);
+
+    // Part 2 : Read File
+
+    const readFileBody = {
+        "webId" : webID,
+        "folder" : req.body.folder,
+        "file" : req.body.file
+    };
+
+    let content = await solidFiles.readFile(readFileBody);
+
+    console.log("content : ");
+    console.log(content);
+
+    // Part 3 : sending content
+    res.send(content);
 });
 
 module.exports = router;

@@ -1,3 +1,12 @@
+/* GET LOCATION : _____________________________________________________________________________*/
+const getLocation_body = {
+    "idp" : "https://solidcommunity.net",
+    "username" : "",
+    "password" : "",
+    "folder" : "",
+    "file" : ""
+}
+
 /* PROFILE : _________________________________________________________________________________*/
 const profile_body = {
     "webId" : "https://grafik.solidcommunity.net/profile/card#me"
@@ -10,3 +19,18 @@ const login_body = {
     "username" : "",
     "password" : ""
 }
+
+/* FILES : ____________________________________________________________________________________*/
+const createFile_body = {
+    "webId" : "https://grafik.solidcommunity.net",
+    "folder" : "",
+    "file" : "",
+    "fileData" : ""
+}
+
+const readFile_body = {
+    "webId" : "https://grafik.solidcommunity.net",
+    "folder" : "",
+    "file" : ""
+}
+

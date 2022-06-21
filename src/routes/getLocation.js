@@ -46,8 +46,14 @@ router.post('/', async (req, res) => {
     console.log("content : ");
     console.log(content);
 
-    // Part 3 : sending content
+    // Part 3 : Logout
+
+    let logout = await auth.logout();
+    console.log(logout);
+
+    // Part 4 : Send content
     res.send(content);
+
 });
 
 module.exports = router;

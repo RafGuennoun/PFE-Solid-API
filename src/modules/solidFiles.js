@@ -6,15 +6,37 @@ const SolidFileCLient = require("solid-file-client");
 const fc   = new SolidFileCLient(auth);
 
 
-// exports.createFile = async function (Infos){
+// exports.createFile = async (Infos) => {
 //     const path = Infos.webId +'/'+ Infos.folder +'/'+ Infos.file;
 //     const data = Infos.fileData;
 //     fc.createFile( path, data)
-//         .then( fileCreated => {
-//         console.log(`Created file ${fileCreated}.`);
-//         });
+//     .then( fileCreated => {
+//         console.log(fileCreated);
+//     });
+//     return path;
 // }
 
+
+exports.createFile = async (Infos) => {
+
+    let session = await auth.currentSession();
+    if (!session) { 
+        session = await auth.login({
+            idp : Infos.idp, // e.g. https://solidcommunity.net
+            username : Infos.username,
+            password : Infos.password,
+        });
+        console.log(`Logged in as ${session.webId}.`);     
+    }
+    const webID = session.webId.replace('/profile/card#me','');
+    const path = webID +'/'+ Infos.folder +'/'+ Infos.file;
+    const data = Infos.fileData;
+    fc.createFile( path, data)
+    .then( fileCreated => {
+        console.log(fileCreated);
+    });
+    return path;
+}
 
 exports.readFile = async function (infos){
     console.log("READ file");

@@ -6,6 +6,15 @@ const getLocation_body = {
     "folder" : "",
     "file" : ""
 }
+//* GET LOCATION : _____________________________________________________________________________*/
+const setLocation_body = {
+    "idp" : "https://solidcommunity.net",
+    "username" : "",
+    "password" : "",
+    "folder" : "",
+    "file" : "data.txt",
+    "fileData" : "feel the magic in the air"
+}
 
 /* PROFILE : _________________________________________________________________________________*/
 const profile_body = {
@@ -19,6 +28,7 @@ const login_body = {
     "username" : "",
     "password" : ""
 }
+
 
 /* FILES : ____________________________________________________________________________________*/
 const createFile_body = {

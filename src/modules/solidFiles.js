@@ -17,39 +17,79 @@ const fc   = new SolidFileCLient(auth);
 // }
 
 
-exports.createFile = async (Infos) => {
+exports.createFile = async (infos) => {
 
-    let session = await auth.currentSession();
-    if (!session) { 
-        session = await auth.login({
-            idp : Infos.idp, // e.g. https://solidcommunity.net
-            username : Infos.username,
-            password : Infos.password,
+    try {
+        
+        // Part 1 : Login
+        let session = await auth.currentSession();
+        if (!session) { 
+            session = await auth.login({
+                idp : infos.idp, // e.g. https://solidcommunity.net
+                username : infos.username,
+                password : infos.password,
+            });
+            console.log(`Logged in as ${session.webId}.`);     
+        }
+
+        // Part 2 : get the web ID
+        const webID = session.webId.replace('/profile/card#me','');
+
+        // Part 3 : Create the file
+
+        // File path
+        const path = webID +'/'+ infos.folder +'/'+ infos.file;
+        const data = infos.fileData;
+        fc.createFile( path, data)
+        .then( fileCreated => {
+            console.log(fileCreated);
         });
-        console.log(`Logged in as ${session.webId}.`);     
+        
+        return path;
+        
+    } catch (error) {
+        console.log(`Error : ${error}`);
+        return null;
     }
-    const webID = session.webId.replace('/profile/card#me','');
-    const path = webID +'/'+ Infos.folder +'/'+ Infos.file;
-    const data = Infos.fileData;
-    fc.createFile( path, data)
-    .then( fileCreated => {
-        console.log(fileCreated);
-    });
-    return path;
+
 }
 
 exports.readFile = async function (infos){
-    console.log("READ file");
-    let content = await fc.readFile(
-        infos.webId
-        +"/"+
-        infos.folder
-        +"/"+
-        infos.file
-    );
 
-    console.log(content);
-    return content;
+    try {
+
+        // Part 1 : Login
+        let session = await auth.currentSession();
+        if (!session) { 
+            session = await auth.login({
+                idp : infos.idp, // e.g. https://solidcommunity.net
+                username : infos.username,
+                password : infos.password,
+            });
+            console.log(`Logged in as ${session.webId}.`);     
+        }
+
+        // Part 2 : get the web ID
+        const webID = session.webId.replace('/profile/card#me','');
+
+        // Part 3 : Read the file
+
+        let content = await fc.readFile(
+            webID
+            +"/"+
+            infos.folder
+            +"/"+
+            infos.file
+        );
+
+        console.log(content);
+        return content;
+
+    } catch (error) {
+        console.log(`Error : ${error}`);
+        return null;
+    }
+    
 }
 
 // async function deletefolder(folderName){

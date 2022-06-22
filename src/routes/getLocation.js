@@ -11,47 +11,11 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
 
-    // Part 1 : Login
-
-    const loginBody = {
-        "idp" : req.body.idp,
-        "username" : req.body.username,
-        "password" : req.body.password
-    }
-
-    let card = await auth.loginToPOD(loginBody);
-    
-    console.log(`clg WebID from route = ${card}`);
-    const webID = card.replace('/profile/card#me','');
-
-    const loginResult = {
-        "login" : true,
-        "idp" : req.body.idp, 
-        "username" : req.body.username, 
-        "webID" : webID
-    };
-
-    console.log(`Login result : \n ${loginResult}`);
-
-    // Part 2 : Read File
-
-    const readFileBody = {
-        "webId" : webID,
-        "folder" : req.body.folder,
-        "file" : req.body.file
-    };
-
-    let content = await solidFiles.readFile(readFileBody);
+    let content = await solidFiles.readFile(req.body);
 
     console.log("content : ");
     console.log(content);
 
-    // Part 3 : Logout
-
-    let logout = await auth.logout();
-    console.log(logout);
-
-    // Part 4 : Send content
     res.send(content);
 
 });

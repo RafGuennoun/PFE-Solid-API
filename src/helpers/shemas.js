@@ -12,8 +12,8 @@ const setLocation_body = {
     "username" : "",
     "password" : "",
     "folder" : "",
-    "file" : "data.txt",
-    "fileData" : "feel the magic in the air"
+    "file" : "",
+    "fileData" : ""
 }
 
 /* PROFILE : _________________________________________________________________________________*/

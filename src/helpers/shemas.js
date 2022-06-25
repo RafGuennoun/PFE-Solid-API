@@ -1,4 +1,5 @@
 /* GET LOCATION : _____________________________________________________________________________*/
+// if the file is not in public we need to login
 const getLocation_body = {
     "idp" : "https://solidcommunity.net",
     "username" : "",
@@ -6,15 +7,35 @@ const getLocation_body = {
     "folder" : "",
     "file" : ""
 }
-//* GET LOCATION : _____________________________________________________________________________*/
-const setLocation_body = {
-    "idp" : "https://solidcommunity.net",
-    "username" : "",
-    "password" : "",
+
+// if the file is in public we don't need to login
+const getLocation_public_body = {
+    "webId" : "https://grafik.solidcommunity.net",
     "folder" : "",
-    "file" : "",
-    "fileData" : ""
+    "file" : ""
 }
+
+
+
+//* SET LOCATION : _____________________________________________________________________________*/
+
+const setLocation_body = {
+    "login" :  {
+        "idp" : "https://solidcommunity.net",
+        "username" : "",
+        "password" : "" 
+    },
+    "webId" : "https://grafik.solidcommunity.net",
+    "fileInfos" : {
+        "folder" : "",
+        "file" : ""
+    },
+    "busLocation" : {
+        "log" : "",
+        "lat" : ""
+    }
+}
+
 
 /* PROFILE : _________________________________________________________________________________*/
 const profile_body = {

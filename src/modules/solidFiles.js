@@ -2,7 +2,7 @@ var exports = module.exports={};
 
 const auth = require('solid-auth-cli');
 const SolidFileCLient = require("solid-file-client");
-const ttl2jsonld = require('@frogcat/ttl2jsonld');
+const util = require('../helpers/utils.js');
 
 const fc   = new SolidFileCLient(auth);
 
@@ -61,9 +61,8 @@ exports.readFile = async function (infos){
         // return content;
 
         console.log("Turn to json");
-        const json =  ttl2jsonld.parse(content);
+        const json = util.convertTTLToJSON(content);
         console.log(json);
-
 
         return json;
 

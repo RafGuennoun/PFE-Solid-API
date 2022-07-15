@@ -3,12 +3,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
-const getLocation = require('./routes/getLocation.js');
-const setLocation = require('./routes/setLocation.js');
+const bus = require('./routes/bus.js');
+const driver = require('./routes/driver.js');
+const location = require('./routes/location.js');
 
 app.use(bodyParser.json());
-app.use('/getLocation', getLocation);
-app.use('/setLocation', setLocation);
+app.use('/bus', bus);
+app.use('/driver', driver);
+app.use('/location', location);
 
 app.get('/', (req,res) => {
     console.log("running");

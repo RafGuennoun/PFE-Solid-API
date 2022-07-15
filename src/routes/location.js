@@ -7,8 +7,16 @@ const solidFiles = require('../modules/solidFiles.js');
 router.get('/', async (req, res) => {
     
     console.log("Route : /Location");
+    res.send("Route : /Location");
+  
+});
+
+router.post('/get', async (req, res) => {
+
+    const webId = req.body.webId;
+
     const infos = {
-        "webId" : "https://grafik.solidcommunity.net",
+        "webId" : webId,
         "folder" : "public/PFE",
         "file" : "location.ttl"
     };
@@ -20,11 +28,12 @@ router.get('/', async (req, res) => {
         "longitude" : content["foaf:longitude"],
         "latitude" : content["foaf:latitude"],
     }
-    
+
     res.send(location);
+
 });
 
-router.post('/', async (req, res) => {
+router.post('/set', async (req, res) => {
 
     console.log("Create/Update location TTL ");
     const result = await rdf.locationTTL(req.body);

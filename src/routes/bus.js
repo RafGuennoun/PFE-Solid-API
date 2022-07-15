@@ -5,9 +5,16 @@ const rdf = require('../modules/rdf.js');
 const solidFiles = require('../modules/solidFiles.js');
 
 router.get('/', async (req, res) => {
-    console.log("Route : /bus");
+    console.log("Route : /Bus");
+    res.send("Route : /Bus");
+});
+
+router.post('/get', async (req, res) => {
+
+    const webId = req.body.webId;
+
     const infos = {
-        "webId" : "https://grafik.solidcommunity.net",
+        "webId" : webId,
         "folder" : "public/PFE",
         "file" : "bus.ttl"
     };
@@ -24,7 +31,7 @@ router.get('/', async (req, res) => {
     res.send(bus);
 });
 
-router.post('/', async (req, res) => {
+router.post('/set', async (req, res) => {
 
     console.log("Create/Update Bus TTL");
     const result = await rdf.busTTL(req.body);

@@ -6,8 +6,16 @@ const solidFiles = require('../modules/solidFiles.js');
 
 router.get('/', async (req, res) => {
     console.log("Route : /Driver");
+    res.send("Route : /Driver");
+   
+});
+
+router.post('/get', async (req, res) => {
+
+    const webId = req.body.webId;
+
     const infos = {
-        "webId" : "https://grafik.solidcommunity.net",
+        "webId" : webId,
         "folder" : "public/PFE",
         "file" : "driver.ttl"
     };
@@ -21,11 +29,12 @@ router.get('/', async (req, res) => {
         "dateNaiss" : content["foaf:dateNaiss"],
         "id" : content["foaf:id"]
     }
-    
+
     res.send(driver);
+
 });
 
-router.post('/', async (req, res) => {
+router.post('/set', async (req, res) => {
 
     console.log("Create/Update driver TTL ");
     const result = await rdf.driverTTL(req.body);

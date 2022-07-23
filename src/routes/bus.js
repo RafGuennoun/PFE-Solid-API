@@ -9,90 +9,43 @@ router.get('/', async (req, res) => {
     res.send("Route : /Bus");
 });
 
+
+router.get('/buses', async (req, res) => {
+    //  TODO: liste de tout les buses du directory
+    console.log("Route : / All Buses from the diredctory");
+    res.send("Route : / All Buses from the diredctory");
+});
+
+
 router.post('/get', async (req, res) => {
-
-    const webId = req.body.webId;
-
-    const infos = {
-        "webId" : webId,
-        "folder" : "public/PFE",
-        "file" : "bus.ttl"
-    };
-
-    const content = await solidFiles.readFile(infos);
-    console.log(content);
-
-    const bus = {
-        "nom" : content["foaf:nom"],
-        "marque" : content["foaf:marque"],
-        "matricule" : content["foaf:matricule"]
-    }
-
-    res.send(bus);
+    //  TODO: les infos d'un seul bus avec le web id
+    console.log("Route : / Bus data");
+    res.send("Route : / Bus data");
 });
 
-router.post('/set', async (req, res) => {
-
-    console.log("Create/Update Bus TTL");
-    const result = await rdf.busTTL(req.body);
-    res.send(result);
+router.post('/add', async (req, res) => {
+    //  TODO: Ajouter un bus au directort
+    console.log("Route : / Add Bus data");
+    res.send("Route : / Add Bus data");
 });
 
-
-router.get('/all', async (req, res) => {
-    console.log("Route : /All");
-    console.log("All bus details");
-
-    const infosBus = {
-        "webId" : "https://grafik.solidcommunity.net",
-        "folder" : "public/PFE",
-        "file" : "bus.ttl"
-    };
-
-    const contentBus = await solidFiles.readFile(infosBus);
-
-    const bus = {
-        "nom" : contentBus["foaf:nom"],
-        "marque" : contentBus["foaf:marque"],
-        "matricule" : contentBus["foaf:matricule"]
-    }
-
-    const infosDriver = {
-        "webId" : "https://grafik.solidcommunity.net",
-        "folder" : "public/PFE",
-        "file" : "driver.ttl"
-    };
-
-    const contentDriver = await solidFiles.readFile(infosDriver);
-
-    const driver = {
-        "nom" : contentDriver["foaf:nom"],
-        "prenom" : contentDriver["foaf:prenom"],
-        "dateNaiss" : contentDriver["foaf:dateNaiss"],
-        "id" : contentDriver["foaf:id"]
-    }
-
-    const infosLocation = {
-        "webId" : "https://grafik.solidcommunity.net",
-        "folder" : "public/PFE",
-        "file" : "location.ttl"
-    };
-
-    const contentLocation = await solidFiles.readFile(infosLocation);
-
-    const location = {
-        "longitude" : contentLocation["foaf:longitude"],
-        "latitude" : contentLocation["foaf:latitude"],
-    }
-
-    const allData = {
-        "bus" : bus,
-        "driver" : driver,
-        "location" : location
-    }
-
-    res.send(allData);
-
+router.post('/update', async (req, res) => {
+    //  TODO: Modifer les infos d'un bus
+    console.log("Route : / Add Bus data");
+    res.send("Route : / Add Bus data");
 });
+
+router.post('/delete', async (req, res) => {
+    //  TODO: Supprimer un bus du directory 
+    console.log("Route : / Delete bus");
+    res.send("Route : / Delete bus");
+});
+
+router.post('/line', async (req, res) => {
+    //  TODO: Recuperer la ligne d'un bus 
+    console.log("Route : / Get bus line");
+    res.send("Route : / Get bus line");
+});
+
 
 module.exports = router;

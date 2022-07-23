@@ -6,11 +6,18 @@ const app = express();
 const bus = require('./routes/bus.js');
 const driver = require('./routes/driver.js');
 const location = require('./routes/location.js');
+const line = require('./routes/line.js');
+const stop = require('./routes/stop.js');
+
+
 
 app.use(bodyParser.json());
 app.use('/bus', bus);
 app.use('/driver', driver);
 app.use('/location', location);
+app.use('/line', line);
+app.use('/stop', stop);
+
 
 app.get('/', (req,res) => {
     console.log("running");

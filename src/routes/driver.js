@@ -7,39 +7,26 @@ const solidFiles = require('../modules/solidFiles.js');
 router.get('/', async (req, res) => {
     console.log("Route : /Driver");
     res.send("Route : /Driver");
-   
 });
 
-router.post('/get', async (req, res) => {
-
-    const webId = req.body.webId;
-
-    const infos = {
-        "webId" : webId,
-        "folder" : "public/PFE",
-        "file" : "driver.ttl"
-    };
-
-    const content = await solidFiles.readFile(infos);
-    console.log(content);
-
-    const driver = {
-        "nom" : content["foaf:nom"],
-        "prenom" : content["foaf:prenom"],
-        "dateNaiss" : content["foaf:dateNaiss"],
-        "id" : content["foaf:id"]
-    }
-
-    res.send(driver);
-
+router.get('/drivers', async (req, res) => {
+    // TODO: Complete this 
+    console.log("Route : / All Driver");
+    res.send("Route : / All Driver");
 });
 
-router.post('/set', async (req, res) => {
-
-    console.log("Create/Update driver TTL ");
-    const result = await rdf.driverTTL(req.body);
-    res.send(result);
-
+router.post('/add', async (req, res) => {
+    // TODO: Complete this 
+    console.log("Route : / Get Driver");
+    res.send("Route : / Get Driver");
 });
+
+router.post('/update', async (req, res) => {
+    // TODO: Complete this 
+    console.log("Route : / Update Driver");
+    res.send("Route : / Update Driver");
+});
+
+
 
 module.exports = router;

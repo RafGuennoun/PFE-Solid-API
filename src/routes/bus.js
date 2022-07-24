@@ -1,21 +1,32 @@
 const express = require('express');
 
 const router = express.Router();
-const rdf = require('../modules/rdf.js');
+const bus = require('../modules/busData.js');
+const directory = require('../modules/directory.js');
 const solidFiles = require('../modules/solidFiles.js');
+
 
 router.get('/', async (req, res) => {
     console.log("Route : /Bus");
     res.send("Route : /Bus");
 });
 
-
 router.get('/buses', async (req, res) => {
-    //  TODO: liste de tout les buses du directory
-    console.log("Route : / All Buses from the diredctory");
-    res.send("Route : / All Buses from the diredctory");
+    //  ? liste de tout les buses du directory
+    // ! working
+    const content = await directory.getBuses();
+    console.log(content);
+    res.send(content);
 });
 
+router.post('/init', async (req, res) => {
+    // ? initialiser les fichiers ttls des bus
+    // ! working
+    console.log("Route : / init Bus");
+    const result = await bus.initTTLFiles(req.body);
+    console.log(result);
+    res.send(result);
+});
 
 router.post('/get', async (req, res) => {
     //  TODO: les infos d'un seul bus avec le web id
@@ -24,15 +35,21 @@ router.post('/get', async (req, res) => {
 });
 
 router.post('/add', async (req, res) => {
-    //  TODO: Ajouter un bus au directort
-    console.log("Route : / Add Bus data");
-    res.send("Route : / Add Bus data");
+    // ? Ajouter un bus au directory
+    // ! working 70%
+    console.log("Route : / add Bus directory");
+    const result = await directory.addBus(req.body);
+    console.log(result);
+    res.send(result);
 });
 
 router.post('/update', async (req, res) => {
-    //  TODO: Modifer les infos d'un bus
+    // ? Modifer les infos d'un bus
+    // ! working
     console.log("Route : / Add Bus data");
-    res.send("Route : / Add Bus data");
+    const result = await bus.busTTLFile(req.body);
+    console.log(res);
+    res.send(result);
 });
 
 router.post('/delete', async (req, res) => {

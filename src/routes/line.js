@@ -3,16 +3,20 @@ const express = require('express');
 const router = express.Router();
 const bus = require('../modules/busData.js');
 const solidFiles = require('../modules/solidFiles.js');
+const directory = require('../modules/directory.js');
 
 router.get('/', async (req, res) => {
     console.log("Route : / Line");
     res.send("Route : / Line");
 });
 
-router.post('/lines', async (req, res) => {
-    // TODO: La liste de toutes les lignes  
+router.get('/lines', async (req, res) => {
+    //  ? liste de toutes les lignes du directory
+    // ! working
     console.log("Route : / All Lines");
-    res.send("Route : / All Lines");
+    const content = await directory.getLines();
+    console.log(content);
+    res.send(content);
 });
 
 router.post('/get', async (req, res) => {
@@ -41,8 +45,17 @@ router.post('/get', async (req, res) => {
 router.post('/add', async (req, res) => {
     // ? Ajouter une ligne pour un bus 
     // ! working
-    console.log("Route : / Add line");
+    console.log("Route : / Add line to bus");
     const result = await bus.lineTTLFile(req.body);
+    console.log(result);
+    res.send(result);
+});
+
+router.post('/add_directory', async (req, res) => {
+    // ? Ajouter une ligne dans le directory
+    // ! working
+    console.log("Route : / Add line to directory");
+    const result = await directory.addLine(req.body);
     console.log(result);
     res.send(result);
 });

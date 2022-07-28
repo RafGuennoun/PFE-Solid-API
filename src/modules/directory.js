@@ -24,9 +24,15 @@ exports.addBus = async function (infos){
 
     const file = await solidFiles.readFile(read);
 
+    // const lines = new String(file["foaf:lines"]);
     const buses = new String(file["foaf:buses"]);
+    let newBuses;
     const p = buses.replace(/.$/,'');
-    const pods = p + `,"${infos.busWebId}"]`;
+    if (buses == `[]`) { 
+        newBuses = p + `"${infos.busWebId}"]`;
+    } else {
+        newBuses = p + `,"${infos.busWebId}"]`;
+    }
 
     // const pods =  `["https://grafik.solidcommunity.net","https://bus1.solidcommunity.net"]`;
 
@@ -37,12 +43,13 @@ exports.addBus = async function (infos){
 
     const userUri = rdfLib.sym(infos.webId +'/profile/card#me');
 
-
     // add the doc to the graph
     graph.add(dirDoc, RDF('type'), FOAF('Document'));
     graph.add(dirDoc, RDF('maker'), userUri);
 
-    graph.add(dirDoc, FOAF('buses'), pods);
+    graph.add(dirDoc, FOAF('buses'), newBuses);
+    graph.add(dirDoc, FOAF('lines'), file["foaf:lines"]);
+
 
     
     const content = rdfLib.serialize(undefined, graph, 'directory.ttl', 'text/turtle');
@@ -78,4 +85,76 @@ exports.getBuses = async function (){
     console.log(buses);
 
     return buses;
+}
+
+exports.addLine = async function (infos){
+   
+    const graph = rdfLib.graph(); 
+
+    const read = {
+        "webId" : "https://annuairepfe.solidcommunity.net",
+        "folder" : "public/PFE",
+        "file" : "directory.ttl"
+    };
+
+    const file = await solidFiles.readFile(read);
+
+    const lines = new String(file["foaf:lines"]);
+    let newLines;
+    const l = lines.replace(/.$/,'');
+    if (lines == `[]`) {
+        newLines = l + `${infos.line}]`;
+    } else {
+        newLines = l + `,${infos.line}]`;
+    }
+
+    // File URI 
+    const dirDoc = rdfLib.sym(
+        infos.webId + "/public/PFE/directory.ttl"
+    );
+
+    const userUri = rdfLib.sym(infos.webId +'/profile/card#me');
+
+
+    // add the doc to the graph
+    graph.add(dirDoc, RDF('type'), FOAF('Document'));
+    graph.add(dirDoc, RDF('maker'), userUri);
+
+    graph.add(dirDoc, FOAF('lines'), newLines);
+    graph.add(dirDoc, FOAF('buses'), file["foaf:buses"]);
+
+    
+    const content = rdfLib.serialize(undefined, graph, 'directory.ttl', 'text/turtle');
+    console.log("content :");
+    console.log("-------------------------------------------------------------------------------------------------");
+    console.log(content);
+    console.log("-------------------------------------------------------------------------------------------------");
+
+    const ttlFileData = { 
+        "idp" : infos.login.idp,
+        "username" : infos.login.username,
+        "password" : infos.login.password,
+        "folder" : "public/PFE",
+        "file" : 'directory.ttl' ,
+        "fileData" : content
+    }
+
+    solidFiles.createFile(ttlFileData);
+
+    return ttlFileData;
+}
+
+exports.getLines = async function (){
+    const infos = {
+        "webId" : "https://annuairepfe.solidcommunity.net",
+        "folder" : "public/PFE",
+        "file" : "directory.ttl"
+    };
+
+    const content = await solidFiles.readFile(infos);
+
+    const lines = content["foaf:lines"];
+    console.log(lines);
+
+    return lines;
 }

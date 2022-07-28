@@ -63,6 +63,13 @@ const initFiles = {
     "location" : {
         "lat" : "",
         "lon" : ""
+    },
+    "line" : {
+        "id" : "",
+        "name" : "",
+        "from" : "",
+        "to" : "",
+        "network" : ""
     }
 }
 

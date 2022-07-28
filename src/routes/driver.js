@@ -1,7 +1,7 @@
 const express = require('express');
 
 const router = express.Router();
-const rdf = require('../modules/rdf.js');
+const bus = require('../modules/busData.js');
 const solidFiles = require('../modules/solidFiles.js');
 
 router.get('/', async (req, res) => {
@@ -9,24 +9,34 @@ router.get('/', async (req, res) => {
     res.send("Route : /Driver");
 });
 
-router.get('/drivers', async (req, res) => {
-    // TODO: Complete this 
-    console.log("Route : / All Driver");
-    res.send("Route : / All Driver");
-});
-
-router.post('/add', async (req, res) => {
-    // TODO: Complete this 
+router.post('/get', async (req, res) => {
+    // ?  Recupere les infos d'un chauffeur de bus
+    // ! Working
     console.log("Route : / Get Driver");
-    res.send("Route : / Get Driver");
+    const infos = {
+        "webId" : req.body.webId,
+        "folder" : "public/PFE",
+        "file" : "driver.ttl"
+    }
+
+    const content = await solidFiles.readFile(infos);
+
+    const result = {
+        "nom": content["foaf:nom"],
+        "prenom": content["foaf:prenom"],
+        "birthday": content["foaf:birthday"],
+        "id": content["foaf:id"]
+    }
+
+    res.send(result);
 });
 
 router.post('/update', async (req, res) => {
-    // TODO: Complete this 
+    // ?  Modifer les infos d'un chauffeur de bus
+    // ! Working
     console.log("Route : / Update Driver");
-    res.send("Route : / Update Driver");
+    const result = await bus.driverTTLFile(req.body);
+    res.send(result);
 });
-
-
 
 module.exports = router;

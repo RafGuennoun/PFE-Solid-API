@@ -39,7 +39,4 @@ router.post('/remove', async (req, res) => {
     res.send("Route : / Remove stop");
 });
 
-
-
-
 module.exports = router;

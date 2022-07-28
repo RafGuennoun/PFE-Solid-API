@@ -29,9 +29,24 @@ router.post('/init', async (req, res) => {
 });
 
 router.post('/get', async (req, res) => {
-    //  TODO: les infos d'un seul bus avec le web id
+    //  ?: les infos d'un seul bus avec le web id
+    // ! working
     console.log("Route : / Bus data");
-    res.send("Route : / Bus data");
+    const infos = {
+        "webId" : req.body.webId,
+        "folder" : "public/PFE",
+        "file" : "bus.ttl",
+    }
+
+    const content = await solidFiles.readFile(infos);
+
+    const result = {
+        "nom": content["foaf:nom"],
+        "marque": content["foaf:marque"],
+        "matricule": content["foaf:matricule"]
+    }
+
+    res.send(result);
 });
 
 router.post('/add', async (req, res) => {
@@ -48,7 +63,7 @@ router.post('/update', async (req, res) => {
     // ! working
     console.log("Route : / Add Bus data");
     const result = await bus.busTTLFile(req.body);
-    console.log(res);
+    console.log(result);
     res.send(result);
 });
 

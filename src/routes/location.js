@@ -1,8 +1,8 @@
 const express = require('express');
 
 const router = express.Router();
-const rdf = require('../modules/rdf.js');
 const solidFiles = require('../modules/solidFiles.js');
+const bus = require('../modules/busData.js');
 
 router.get('/', async (req, res) => {
     console.log("Route : /Location");
@@ -10,15 +10,31 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/get', async (req, res) => {
-    // TODO: Complete this
+    // ? Recuperer la localisation d'un bus
+    // ! working
     console.log("Route : / get Location");
-    res.send("Route : / get Location");
+    const infos = {
+        "webId" : req.body.webId,
+        "folder" : "public/PFE",
+        "file" : "location.ttl",
+    }
+
+    const content = await solidFiles.readFile(infos);
+
+    const result = {
+        "lat": content["foaf:lat"],
+        "lon": content["foaf:lon"]
+    }
+
+    res.send(result);
 });
 
 router.post('/set', async (req, res) => {
-    // TODO: Complete this
+    // ? Modifier la localisation d'un bus
+    // ! working
     console.log("Route : / set Location");
-    res.send("Route : / set Location");
+    const result = await bus.locationTTLFile(req.body);
+    res.send(result);
 });
 
 module.exports = router;

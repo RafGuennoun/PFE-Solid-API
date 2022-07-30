@@ -87,6 +87,24 @@ exports.getBuses = async function (){
     return buses;
 }
 
+// exports.deleteBus = async function (infos){
+//     const buses = this.getBuses();
+//     const busToRemove = infos.busWebId;  
+//     console.log(busToRemove);
+//     const index = buses.indexOf(busToRemove);
+//     console.log(`index = ${index}`);
+//     if (index > -1) {
+//         console.log("exists in the list");
+//         const newBuses = buses.splice(index, 1);
+//         return newBuses;
+//     }
+//     else{
+//         return {
+//             "exists" : "false"
+//         };
+//     }
+// }
+
 exports.addLine = async function (infos){
    
     const graph = rdfLib.graph(); 

@@ -86,13 +86,13 @@ router.post('/line', async (req, res) => {
     const content = await solidFiles.readFile(infos);
 
     const result = {
-        "id": content["foaf:id"],
         "name": content["foaf:name"],
+        "id": content["foaf:id"],
         "network": content["foaf:network"],
         "from": content["foaf:from"],
         "to": content["foaf:to"]
     }
-    
+
     res.send(result);
 });
 

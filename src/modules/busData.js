@@ -41,6 +41,7 @@ exports.busTTLFile = async function (infos){
 
     graph.add(busDoc, FOAF('conducteur'), driverURI);
     graph.add(busDoc, FOAF('localisation'), locationURI);
+    graph.add(busDoc, FOAF('line'), lineURI);
     graph.add(busDoc, FOAF('nom'), infos.bus.nom);
     graph.add(busDoc, FOAF('matricule'), infos.bus.matricule);
     graph.add(busDoc, FOAF('marque'), infos.bus.marque);

@@ -8,8 +8,7 @@ const driver = require('./routes/driver.js');
 const location = require('./routes/location.js');
 const line = require('./routes/line.js');
 const stop = require('./routes/stop.js');
-
-
+const account = require('./routes/account.js');
 
 app.use(bodyParser.json());
 app.use('/bus', bus);
@@ -17,6 +16,7 @@ app.use('/driver', driver);
 app.use('/location', location);
 app.use('/line', line);
 app.use('/stop', stop);
+app.use('/account', account);
 
 
 app.get('/', (req,res) => {

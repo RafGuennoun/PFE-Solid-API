@@ -2,6 +2,7 @@ var exports = module.exports={};
 
 const rdfLib = require('rdflib');
 const solidFiles = require('./solidFiles.js');
+const auth = require('solid-auth-cli');
 
 // prefixes 
 const RDF = rdfLib.Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#")
@@ -157,4 +158,31 @@ exports.getLines = async function (){
     console.log(lines);
 
     return lines;
+}
+
+exports.getWebId = async function (infos) {
+    
+    try {
+        
+        // Part 1 : Login
+        let session = await auth.currentSession();
+        if (!session) { 
+            session = await auth.login({
+                idp : infos.idp, // e.g. https://solidcommunity.net
+                username : infos.username,
+                password : infos.password,
+            });
+
+            console.log(`Logged in as ${session.webId}.`);     
+        }
+
+        // Part 2 : get the web ID
+        const webID = session.webId.replace('/profile/card#me','');
+
+        return webID;
+        
+    } catch (error) {
+        console.log(`Error : ${error}`);
+        return null;
+    }
 }

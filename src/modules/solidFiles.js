@@ -88,6 +88,8 @@ exports.createFile = async (infos) => {
         .then( fileCreated => {
             console.log(fileCreated);
         });
+
+        auth.logout();
         
         return path;
         

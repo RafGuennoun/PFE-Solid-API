@@ -179,7 +179,13 @@ exports.getWebId = async function (infos) {
         // Part 2 : get the web ID
         const webID = session.webId.replace('/profile/card#me','');
 
-        return webID;
+        const res = {
+            "username" : infos.username,
+            "password" : infos.password,
+            "webId" : webID
+        };
+
+        return res;
         
     } catch (error) {
         console.log(`Error : ${error}`);

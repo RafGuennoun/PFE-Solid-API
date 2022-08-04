@@ -182,13 +182,19 @@ exports.getWebId = async function (infos) {
         const res = {
             "username" : infos.username,
             "password" : infos.password,
-            "webId" : webID
+            "webId" : webID,
+            "error" : "0"
         };
+
+        auth.logout();
 
         return res;
         
     } catch (error) {
         console.log(`Error : ${error}`);
-        return null;
+        const res = {
+            "error" : "1"
+        };
+        return res;
     }
 }

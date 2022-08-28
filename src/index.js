@@ -9,6 +9,7 @@ const location = require('./routes/location.js');
 const line = require('./routes/line.js');
 const stop = require('./routes/stop.js');
 const account = require('./routes/account.js');
+const test = require('./routes/test.js');
 
 app.use(bodyParser.json());
 app.use('/bus', bus);
@@ -17,6 +18,7 @@ app.use('/location', location);
 app.use('/line', line);
 app.use('/stop', stop);
 app.use('/account', account);
+app.use('/test', test);
 
 
 app.get('/', (req,res) => {

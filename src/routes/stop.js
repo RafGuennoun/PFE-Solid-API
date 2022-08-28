@@ -1,8 +1,8 @@
 const express = require('express');
 
 const router = express.Router();
-const rdf = require('../modules/rdf.js');
-const solidFiles = require('../modules/solidFiles.js');
+const rdf = require('../controllers/rdf.js');
+const solidFiles = require('../controllers/solidFiles.js');
 
 router.get('/', async (req, res) => {
     console.log("Route : / Stop");

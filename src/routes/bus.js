@@ -1,9 +1,9 @@
 const express = require('express');
 
 const router = express.Router();
-const bus = require('../modules/busData.js');
-const directory = require('../modules/directory.js');
-const solidFiles = require('../modules/solidFiles.js');
+const bus = require('../controllers/busData.js');
+const directory = require('../controllers/directory.js');
+const solidFiles = require('../controllers/solidFiles.js');
 
 
 router.get('/', async (req, res) => {

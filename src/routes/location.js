@@ -1,8 +1,8 @@
 const express = require('express');
 
 const router = express.Router();
-const solidFiles = require('../modules/solidFiles.js');
-const bus = require('../modules/busData.js');
+const solidFiles = require('../controllers/solidFiles.js');
+const bus = require('../controllers/busData.js');
 
 router.get('/', async (req, res) => {
     console.log("Route : /Location");

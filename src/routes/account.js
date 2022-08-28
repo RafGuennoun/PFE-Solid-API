@@ -1,7 +1,7 @@
 const express = require('express');
 
 const router = express.Router();
-const directory = require('../modules/directory.js');
+const directory = require('../controllers/directory.js');
 
 
 router.get('/', async (req, res) => {

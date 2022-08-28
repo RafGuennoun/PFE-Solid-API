@@ -74,23 +74,19 @@ router.post('/delete', async (req, res) => {
 });
 
 router.post('/line', async (req, res) => {
-    //  ? Recuperer la ligne d'un bus 
-    console.log("Route : / Get bus line");
-
+    //  ?: les infos d'un seul bus avec le web id
+    // ! working
+    console.log("Route : / Bus data");
     const infos = {
         "webId" : req.body.webId,
         "folder" : "public/PFE",
-        "file" : "line.ttl",
+        "file" : "bus.ttl",
     }
 
     const content = await solidFiles.readFile(infos);
 
     const result = {
-        "name": content["foaf:name"],
-        "id": content["foaf:id"],
-        "network": content["foaf:network"],
-        "from": content["foaf:from"],
-        "to": content["foaf:to"]
+        "line": content["foaf:line"],
     }
 
     res.send(result);

@@ -31,17 +31,13 @@ exports.busTTLFile = async function (infos){
         infos.webId + "/public/PFE/location.ttl"
     );
 
-    const lineURI = rdfLib.sym(
-        infos.webId + "/public/PFE/line.ttl"
-    );
-
     // add the doc to the graph
     graph.add(busDoc, RDF('type'), FOAF('Document'));
     graph.add(busDoc, RDF('maker'), userUri);
 
     graph.add(busDoc, FOAF('conducteur'), driverURI);
     graph.add(busDoc, FOAF('localisation'), locationURI);
-    graph.add(busDoc, FOAF('line'), lineURI);
+    graph.add(busDoc, FOAF('ligne'), infos.bus.line);
     graph.add(busDoc, FOAF('nom'), infos.bus.nom);
     graph.add(busDoc, FOAF('matricule'), infos.bus.matricule);
     graph.add(busDoc, FOAF('marque'), infos.bus.marque);
@@ -84,7 +80,6 @@ exports.driverTTLFile = async function (infos){
 
     graph.add(driverDoc, FOAF('nom'), infos.driver.nom);
     graph.add(driverDoc, FOAF('prenom'), infos.driver.prenom);
-    graph.add(driverDoc, FOAF('birthday'), infos.driver.birthday);
     graph.add(driverDoc, FOAF('id'), infos.driver.id);
     
     const content = rdfLib.serialize(undefined, graph, 'driver.ttl', 'text/turtle');
@@ -125,6 +120,7 @@ exports.locationTTLFile = async function (infos){
 
     graph.add(locationDoc, FOAF('lat'), infos.location.lat);
     graph.add(locationDoc, FOAF('lon'), infos.location.lon);
+    graph.add(locationDoc, FOAF('track'), infos.location.track);
 
     
     const content = rdfLib.serialize(undefined, graph, 'location.ttl', 'text/turtle');
@@ -147,47 +143,6 @@ exports.locationTTLFile = async function (infos){
     return ttlFileData;
 }
 
-// Line Turtle File
-exports.lineTTLFile = async function (infos){
-   
-    const graph = rdfLib.graph();
-
-    // File URI 
-    const lineDoc = rdfLib.sym(
-        infos.webId + "/public/PFE/line.ttl"
-    );
-
-    const userUri = rdfLib.sym(infos.webId +'/profile/card#me');
-
-    // add the doc to the graph
-    graph.add(lineDoc, RDF('type'), FOAF('Document'));
-    graph.add(lineDoc, RDF('maker'), userUri);
-
-    graph.add(lineDoc, FOAF('id'), infos.line.id);
-    graph.add(lineDoc, FOAF('name'), infos.line.name);
-    graph.add(lineDoc, FOAF('from'), infos.line.from);
-    graph.add(lineDoc, FOAF('to'), infos.line.to);
-    graph.add(lineDoc, FOAF('network'), infos.line.network);
-    
-    const content = rdfLib.serialize(undefined, graph, 'line.ttl', 'text/turtle');
-    console.log("content :");
-    console.log("-------------------------------------------------------------------------------------------------");
-    console.log(content);
-    console.log("-------------------------------------------------------------------------------------------------");
-
-    const ttlFileData = { 
-        "idp" : infos.login.idp,
-        "username" : infos.login.username,
-        "password" : infos.login.password,
-        "folder" : "public/PFE",
-        "file" : 'line.ttl' ,
-        "fileData" : content
-    }
-
-    solidFiles.createFile(ttlFileData);
-
-    return ttlFileData;
-}
 
 // init file
 exports.initTTLFiles = async function(infos){
@@ -196,6 +151,7 @@ exports.initTTLFiles = async function(infos){
         "webId" : infos.webId,
         "bus" : infos.bus,
     };
+
 
     const driver_infos = {
         "login" : infos.login,
@@ -209,22 +165,15 @@ exports.initTTLFiles = async function(infos){
         "location" : infos.location,
     };
 
-    const line_infos = {
-        "login" : infos.login,
-        "webId" : infos.webId,
-        "line" : infos.line,
-    };
 
     const location = await this.locationTTLFile(location_infos);
     const driver = await this.driverTTLFile(driver_infos);
-    const line = await this.lineTTLFile(line_infos);
     const bus = this.busTTLFile(bus_infos);
 
     const res = {
         "bus" : bus,
         "driver" : driver,
         "location" : location,
-        "line" : line
     }
 
     return res;

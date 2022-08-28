@@ -37,10 +37,11 @@ exports.busTTLFile = async function (infos){
 
     graph.add(busDoc, FOAF('conducteur'), driverURI);
     graph.add(busDoc, FOAF('localisation'), locationURI);
-    graph.add(busDoc, FOAF('ligne'), infos.bus.line);
     graph.add(busDoc, FOAF('nom'), infos.bus.nom);
     graph.add(busDoc, FOAF('matricule'), infos.bus.matricule);
     graph.add(busDoc, FOAF('marque'), infos.bus.marque);
+    graph.add(busDoc, FOAF('ligne'), infos.bus.line);
+    graph.add(busDoc, FOAF('activity'), infos.bus.activity);
     
     const content = rdfLib.serialize(undefined, graph, 'bus.ttl', 'text/turtle');
     console.log("content :");

@@ -22,9 +22,10 @@ router.post('/get', async (req, res) => {
     const content = await solidFiles.readFile(infos);
 
     const result = {
-        "lat": content["foaf:lat"],
-        "lon": content["foaf:lon"]
-    }
+        "lat": content["geo:lat"],
+        "lon": content["geo:lon"],
+        "track": content["geo:lon"],
+    } 
 
     res.send(result);
 });

@@ -7,6 +7,7 @@ const rdfLib = require('rdflib');
 const RDF = rdfLib.Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#")
 const RDFS =  rdfLib.Namespace("http://www.w3.org/2000/01/rdf-schema#")
 const FOAF = rdfLib.Namespace("http://xmlns.com/foaf/0.1/")
+const GEO = rdfLib.Namespace("http://www.w3.org/2003/01/geo/wgs84_pos#") 
 const XSD = rdfLib. Namespace("http://www.w3.org/2001/XMLSchema#")
 
 // ? RDF for the bus, driver, location file 
@@ -119,9 +120,9 @@ exports.locationTTLFile = async function (infos){
     graph.add(locationDoc, RDF('type'), FOAF('Document'));
     graph.add(locationDoc, RDF('maker'), userUri);
 
-    graph.add(locationDoc, FOAF('lat'), infos.location.lat);
-    graph.add(locationDoc, FOAF('lon'), infos.location.lon);
-    graph.add(locationDoc, FOAF('track'), infos.location.track);
+    graph.add(locationDoc, GEO('lat'), infos.location.lat);
+    graph.add(locationDoc, GEO('lon'), infos.location.lon);
+    graph.add(locationDoc, GEO('track'), infos.location.track);
 
     
     const content = rdfLib.serialize(undefined, graph, 'location.ttl', 'text/turtle');
